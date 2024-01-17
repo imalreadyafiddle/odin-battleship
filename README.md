@@ -1,2 +1,3 @@
 # odin-battleship
-JS implementation of the popular game, Battleship.
+
+JS implementation of the classic board game, Battleship.
