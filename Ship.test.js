@@ -2,7 +2,12 @@ import Ship from "./Ship";
 
 it("is correctly created", () => {
   const ship = new Ship(3);
-  expect(ship).toEqual({ length: 3, hits: [0, 0, 0], sunk: false });
+  expect(ship).toEqual({
+    length: 3,
+    hits: [0, 0, 0],
+    sunk: false,
+    coordinates: [],
+  });
 });
 
 it("can be hit at a specific location", () => {

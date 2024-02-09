@@ -1,8 +1,9 @@
 class Ship {
-  constructor(length, hits = [], sunk = false) {
+  constructor(length, hits = [], sunk = false, coordinates = []) {
     this.length = length;
     this.hits = new Array(length).fill(0);
     this.sunk = sunk;
+    this.coordinates = [];
   }
 
   hit(index) {
