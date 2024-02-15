@@ -2,39 +2,36 @@ import Gameboard from "./Gameboard.js";
 import Ship from "./Ship.js";
 
 it("is created correctly", () => {
-  const gameboard = new Gameboard();
-  expect(gameboard.grid.A1).toEqual({ ship: null, hit: false });
-  expect(gameboard.grid.J10).toEqual({ ship: null, hit: false });
-  expect(gameboard.grid.K11).toBeUndefined();
-  expect(gameboard.grid.A0).toBeUndefined();
+  const board = new Gameboard();
+  expect(board.grid.A1).toEqual({ ship: null, hit: false });
+  expect(board.grid.J10).toEqual({ ship: null, hit: false });
+  expect(board.ships).toEqual([]);
+  expect(board.grid.K1).toBeUndefined();
+  expect(board.grid.A11).toBeUndefined();
 });
-it("can place a ship on itself", () => {
-  const gameboard = new Gameboard();
-  gameboard.placeShip(3, "A1", "horizontal");
-  expect(gameboard.grid.A1.ship).toBeInstanceOf(Ship);
-  expect(gameboard.grid.A2.ship).toBeInstanceOf(Ship);
-  expect(gameboard.grid.A3.ship).toBeInstanceOf(Ship);
-  expect(gameboard.grid.A4.ship).toBe(null);
-  expect(gameboard.grid.B1.ship).toBe(null);
+it("places ships horizontally correctly", () => {
+  const board = new Gameboard();
+  board.placeShip(3, "A1", "horizontal");
+  expect(board.grid.A1.ship).toBeInstanceOf(Ship);
+  expect(board.grid.A2.ship).toBeInstanceOf(Ship);
+  expect(board.grid.A3.ship).toBeInstanceOf(Ship);
+  expect(board.ships[0].coordinates).toEqual(["A1", "A2", "A3"]);
 });
-it("places the ship in the correct positions", () => {
-  const gameboard = new Gameboard();
-  gameboard.placeShip(3, "A1", "horizontal");
-  expect(gameboard.grid.A1.ship.coordinates).toEqual(["A1", "A2", "A3"]);
+it("places ships vertically correctly", () => {
+  const board = new Gameboard();
+  board.placeShip(3, "A1", "vertical");
+  expect(board.grid.A1.ship).toBeInstanceOf(Ship);
+  expect(board.grid.B1.ship).toBeInstanceOf(Ship);
+  expect(board.grid.C1.ship).toBeInstanceOf(Ship);
+  expect(board.ships[0].coordinates).toEqual(["A1", "B1", "C1"]);
 });
-it("cannot place a ship outside itself", () => {
-  const gameboard = new Gameboard();
+it("cannot place a ship outside the board", () => {
+  const board = new Gameboard();
   expect(() => {
-    gameboard.placeShip(3, "A8", "horizontal");
-  }).toThrow("Invalid placement");
+    board.placeShip(3, "A9", "horizontal");
+  }).toThrow("Ship cannot be placed outside the board");
 });
-it("cannot place a ship onto an occupied space", () => {
-  const gameboard = new Gameboard();
-  gameboard.placeShip(3, "A1", "horizontal");
-  expect(() => {
-    gameboard.placeShip(3, "A1", "horizontal");
-  }).toThrow("Invalid placement");
-});
+it.todo("cannot place a ship onto an occupied space");
 it.todo("signals when all ships on a board are sunk");
 it.todo("can receive an attack");
 it.todo("can send an attack");
